@@ -5,7 +5,6 @@ import com.aeminkaplan.reposcorer.model.RepoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,22 +12,19 @@ public class ScorerService {
 
     private Calculator calculator;
 
+    private FetcherService fetcherService;
+
     @Autowired
-    public ScorerService(Calculator calculator) {
+    public ScorerService(Calculator calculator,FetcherService fetcherService) {
         this.calculator = calculator;
+        this.fetcherService = fetcherService;
     }
 
 
-
-    private List<RepoResponse> fetchRepositories(RepoRequest request){
-        //TODO fetch from Github api will be implemented
-        return new ArrayList<>();
-
-    }
 
 
     public List<RepoResponse> scoreRepositories(RepoRequest request){
-        List<RepoResponse> fetchedRepositories = fetchRepositories(request);
+        List<RepoResponse> fetchedRepositories = fetcherService.fetch(request);
         fetchedRepositories.forEach(r->r.setPopularityScore(calculator.calculate(r.getStars(),r.getForks(),r.getLastUpdated())));
         return fetchedRepositories;
     }
