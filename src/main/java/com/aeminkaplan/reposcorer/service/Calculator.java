@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 
 @Service
 public class Calculator {
-    public long calculate(int numberOfStars, int numberOfForks, LocalDateTime lastUpdatedTime){
+    public long calculate(long numberOfStars, long numberOfForks, LocalDateTime lastUpdatedTime){
 
         //initial score is sum of forks and stars
-        int score = numberOfForks + numberOfStars;
+        long score = numberOfForks + numberOfStars;
         long numberOfDaysAfterLastUpdate = Duration.between(lastUpdatedTime, LocalDateTime.now()).toDays();
 
         if(numberOfDaysAfterLastUpdate <= 30){
