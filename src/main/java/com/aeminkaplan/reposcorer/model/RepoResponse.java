@@ -11,8 +11,8 @@ public class RepoResponse {
 
     private String name;
     private String url;
-    private Long stars;
+    private Long stargazers_count;
     private Long forks;
-    private LocalDateTime lastUpdated;
+    private LocalDateTime updated_at;
     private Long popularityScore;
 }

@@ -25,7 +25,7 @@ public class ScorerService {
 
     public List<RepoResponse> scoreRepositories(RepoRequest request){
         List<RepoResponse> fetchedRepositories = fetcherService.fetch(request);
-        fetchedRepositories.forEach(r->r.setPopularityScore(calculator.calculate(r.getStars(),r.getForks(),r.getLastUpdated())));
+        fetchedRepositories.forEach(r->r.setPopularityScore(calculator.calculate(r.getStargazers_count(),r.getForks(),r.getUpdated_at())));
         return fetchedRepositories;
     }
 }
