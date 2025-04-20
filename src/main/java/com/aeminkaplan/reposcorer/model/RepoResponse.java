@@ -15,4 +15,5 @@ public class RepoResponse {
     private Long forks;
     private LocalDateTime updated_at;
     private Long popularityScore;
+    private String language;
 }

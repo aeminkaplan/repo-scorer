@@ -33,7 +33,7 @@ class ScorerServiceTest {
     @Test
     void testScoreRepositories() {
         RepoRequest request = new RepoRequest("webcrawler","python", LocalDateTime.now());
-        RepoResponse repoResponse =  new RepoResponse("Python3Webcrawler","https://github.com/mochazi/Python3Webcrawler",10L,10L,LocalDateTime.now(),null);
+        RepoResponse repoResponse =  new RepoResponse("Python3Webcrawler","https://github.com/mochazi/Python3Webcrawler",10L,10L,LocalDateTime.now(),null,"Python");
 
         when(fetcherService.fetch(any())).thenReturn(Stream.of(repoResponse).collect(Collectors.toList()));
 

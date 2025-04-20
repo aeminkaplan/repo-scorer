@@ -22,12 +22,21 @@ public class FetcherService {
                     .baseUrl("https://api.github.com")
                     .build();
         }
+        String query = request.getKeyword();
+        if(request.getLanguage() != null){
+            query = query + String.format(" language:%s",request.getLanguage());
+        }
+        if(request.getEarliestCreateDate() != null){
+            query = query + String.format("  created:>%s",request.getEarliestCreateDate());
 
+        }
 
+        String finalQuery = query;
         GitHubSearchResponse response = restClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/search/repositories")
-                        .queryParam("q", request.getKeyword())
+                        .queryParam("q", finalQuery)
+                        .queryParam("per_page", 100)
                         .build())
                 .retrieve()
                 .body(GitHubSearchResponse.class);

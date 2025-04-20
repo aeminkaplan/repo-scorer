@@ -19,10 +19,11 @@ class FetcherServiceTest {
 
     @Test
     void fetch() {
-        RepoRequest request = new RepoRequest("webcrawler","python", LocalDateTime.now());
+        RepoRequest request = new RepoRequest("webcrawler","python", LocalDateTime.now().minusMonths(6));
 
         List<RepoResponse> responseList = fetcherService.fetch(request);
         assertNotNull(responseList);
         assertNotEquals(0,responseList.size());
+        assertEquals(request.getLanguage().toLowerCase(),responseList.getFirst().getLanguage().toLowerCase());
     }
 }
