@@ -1,5 +1,6 @@
 package com.aeminkaplan.reposcorer.controller;
 
+import com.aeminkaplan.reposcorer.exception.ExternalApiException;
 import com.aeminkaplan.reposcorer.model.RepoResponse;
 import com.aeminkaplan.reposcorer.service.FetcherService;
 import org.junit.jupiter.api.Test;
@@ -7,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +31,7 @@ class ScorerControllerTest {
 
     @MockBean
     private FetcherService fetcherService;
+
 
     @Test
     void getRepos_shouldReturnListOfRepos_withKeyword() throws Exception {
@@ -57,5 +61,29 @@ class ScorerControllerTest {
         mockMvc.perform(get("/v1/score")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getRepos_shouldReturnBadGateway() throws Exception {
+
+        when(fetcherService.fetch(any())).thenThrow(new ExternalApiException("GitHub down",new HttpServerErrorException(HttpStatusCode.valueOf(500))));
+        mockMvc.perform(get("/v1/score")
+                        .param("keyword","webcrawler")
+                        .param("language", "python")
+                        .param("earliestCreated", "2024-04-01T00:00:00")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadGateway());
+    }
+
+    @Test
+    void getRepos_shouldReturnInternalServerError() throws Exception {
+
+        when(fetcherService.fetch(any())).thenThrow(new NullPointerException());
+        mockMvc.perform(get("/v1/score")
+                        .param("keyword","webcrawler")
+                        .param("language", "python")
+                        .param("earliestCreated", "2024-04-01T00:00:00")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
     }
 }
