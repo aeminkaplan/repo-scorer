@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  repo-scorer:
+    image: eclipse-temurin:21-jdk-alpine
+    container_name: repo-scorer
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/repo-scorer-0.0.1-SNAPSHOT.jar:/app/app.jar
+      - ./src/main/resources/application.properties:/app/application.properties
+    working_dir: /app
+    entrypoint: ["java", "-jar", "app.jar", "--spring.config.location=file:/app/application.properties"]
+    restart: unless-stopped
