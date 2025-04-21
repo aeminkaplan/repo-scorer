@@ -29,7 +29,8 @@ public class FetcherService {
     public List<RepoResponse> fetch(RepoRequest request) throws ExternalApiException {
 
         try {
-            String query = request.getKeyword();
+            log.info("Calling GitHub API for: keyword={}, language={}, date={}",
+                    request.getKeyword(), request.getLanguage(), request.getEarliestCreateDate());                    String query = request.getKeyword();
             if(request.getLanguage() != null){
                 query = query + String.format(" language:%s",request.getLanguage());
             }

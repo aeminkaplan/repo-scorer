@@ -70,7 +70,7 @@ class ScorerControllerTest {
         mockMvc.perform(get("/v1/score")
                         .param("keyword","webcrawler")
                         .param("language", "python")
-                        .param("earliestCreated", "2024-04-01T00:00:00")
+                        .param("earliestCreated", "2024-04-01T00:01:00")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadGateway());
     }
@@ -82,7 +82,7 @@ class ScorerControllerTest {
         mockMvc.perform(get("/v1/score")
                         .param("keyword","webcrawler")
                         .param("language", "python")
-                        .param("earliestCreated", "2024-04-01T00:00:00")
+                        .param("earliestCreated", "2024-04-01T00:02:00")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError());
     }
