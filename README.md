@@ -67,6 +67,16 @@ cache.duration.in.minutes=10
 
 cache.size=100
 
+
+## 📖 API Documentation
+
+Once the application is running, you can view the REST API documentation here:
+
+➡️ [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+The docs are powered by [SpringDoc OpenAPI](https://springdoc.org/) and provide an interactive Swagger UI to test endpoints.
+
+
    
 
 
